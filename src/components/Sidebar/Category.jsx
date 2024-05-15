@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ShoeContext } from './../../context/shoe-context';
+import { setCategoryAction } from "../../reducer/actions";
 
 const categories = [
     "All", "Sneakers", "Flats", "Sandals", "Heels"
 ]
 function Category() {
+    const {state: { filters: {category}}, dispatch} = useContext(ShoeContext)
     return (
         <div className="py-2 d-flex flex-column justify-content-center">
             <h5>Category</h5>
@@ -15,11 +18,12 @@ function Category() {
                                 id={`cat_${index}`}
                                 value={cat}
                                 defaultChecked={cat === 'All'}
+                                onChange={(e) => dispatch(setCategoryAction(e.target.value))}
                             />
                             <label 
                                 htmlFor={`cat_${index}`}
                                 role="button"
-                                className={`form-check-label ${cat === 'All' ? 'text-decoration-underline fw-bolder' : ''}`}
+                                className={`form-check-label ${cat === category ? 'text-decoration-underline fw-bolder' : ''}`}
                             >
                                 {cat}
                             </label>

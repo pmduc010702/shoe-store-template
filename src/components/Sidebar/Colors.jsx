@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ShoeContext } from "../../context/shoe-context";
+import { setColorsAction } from "../../reducer/actions";
 
 const colors = [
     "All", "Black", "Blue", "Red", "Green", 'White'
 ]
 function Colors() {
+    const {state: {filters: {color: currentColor}}, dispatch} = useContext(ShoeContext)
+
     return (
         <div className="py-2 d-flex flex-column justify-content-center">
             <h5>Colors</h5>
@@ -16,11 +20,12 @@ function Colors() {
                                 value={color}
                                 defaultChecked={color === 'All'}
                                 style={color === 'All' ? { backgroundImage: 'linear-gradient(to right, red, green)' } : color !== 'White' ? { backgroundColor: color } : {}}
+                                onChange={(e) => dispatch(setColorsAction(e.target.value))}
                             />
                             <label 
                                 role="button"
                                 htmlFor={`color_${index}`}
-                                className={`form-check-label ${color === 'All' ? 'text-decoration-underline fw-bolder' : ''}`}
+                                className={`form-check-label ${color === currentColor ? 'text-decoration-underline fw-bolder' : ''}`}
                             >
                                 {color}
                             </label>
