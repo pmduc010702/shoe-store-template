@@ -28,3 +28,9 @@ export function setPriceAction(payload) {
         payload
     }
 }
+export function fetchProductAction(payload) {
+    return {
+        type: 'product/fetchProducts',
+        payload
+    }
+}
