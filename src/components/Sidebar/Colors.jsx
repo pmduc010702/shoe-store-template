@@ -1,9 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setColorAction } from "../../reducer/actions";
+import { filterSelector } from "../../redux/selector";
 
 const colors = [
     "All", "Black", "Blue", "Red", "Green", 'White'
 ]
 function Colors() {
+    const {color: currentColor} = useSelector(filterSelector)
+    const dispatch = useDispatch()
     return (
         <div className="py-2 d-flex flex-column justify-content-center">
             <h5>Colors</h5>
@@ -16,11 +21,12 @@ function Colors() {
                                 value={color}
                                 defaultChecked={color === 'All'}
                                 style={color === 'All' ? { backgroundImage: 'linear-gradient(to right, red, green)' } : color !== 'White' ? { backgroundColor: color } : {}}
+                                onChange={() => dispatch(setColorAction(color))}
                             />
                             <label 
                                 role="button"
                                 htmlFor={`color_${index}`}
-                                className={`form-check-label ${color === 'All' ? 'text-decoration-underline fw-bolder' : ''}`}
+                                className={`form-check-label ${color === currentColor ? 'text-decoration-underline fw-bolder' : ''}`}
                             >
                                 {color}
                             </label>

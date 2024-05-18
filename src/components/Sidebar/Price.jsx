@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPriceAction } from './../../reducer/actions';
+import { filterSelector } from "../../redux/selector";
 
 const prices = [
     {
@@ -24,6 +27,8 @@ const prices = [
 
 ]
 function Price() {
+    const dispatch = useDispatch()
+    const {price: currentPrice} = useSelector(filterSelector)
     return (
         <div className="py-2 d-flex flex-column justify-content-center">
             <h5>Price</h5>
@@ -35,11 +40,12 @@ function Price() {
                                 id={`price_${index}`}
                                 value={price.value}
                                 defaultChecked={price.name === 'All'}
+                                onChange={() => dispatch(setPriceAction(price.value))}
                             />
                             <label 
                                 role="button"
                                 htmlFor={`price_${index}`}
-                                className={`form-check-label ${price.name === 'All' ? 'text-decoration-underline fw-bolder' : ''}`}
+                                className={`form-check-label ${price.name === currentPrice ? 'text-decoration-underline fw-bolder' : ''}`}
                             >
                                 {price.name}
                             </label>

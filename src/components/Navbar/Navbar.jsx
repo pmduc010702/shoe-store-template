@@ -1,8 +1,14 @@
 import React from "react";
 import { FaCartPlus, FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa'
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setSearchTextAction } from "../../reducer/actions";
 
 function Navbar() {
+    const filters = useSelector((state) => state.filters)
+    const dispatch = useDispatch()
+    console.log(filters);
+
     return (
         <div className="container d-flex align-items-center border-bottom py-2">
             <div className="d-flex align-items-center" style={{ minWidth: "180px" }}>
@@ -17,6 +23,7 @@ function Navbar() {
                         placeholder="Enter your search shoes"
                         className="form-control form-control-sm"
                         style={{ paddingRight: '25px' }}
+                        onChange={(e) => dispatch(setSearchTextAction(e.target.value))}
                     />
                     <FaSearch size={15} style={{ marginLeft: '-25px', color: 'rgba(0,0,0,.2)' }} />
                 </form>
